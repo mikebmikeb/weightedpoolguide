@@ -85,7 +85,7 @@ Now we put these two parts together with a 0x at the beginning so
 
 Which is our **userData**
 
-**bool**
+### **bool**
 
 The final parameter relates to whether the resulting output is to internal balances.  You can just set it to `false`
 
