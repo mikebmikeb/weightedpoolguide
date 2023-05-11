@@ -80,6 +80,8 @@ To encode this value, go to https://abi.hashex.org/ and select Add Argument and 
 You can get your BPT amount by going to the pool token contract, clicking contract> read contract and going to balanceOf() and inputting your address.  Whatever it returns is how much BPT you hold in 18 decimals.  Input that into the site above and copy the resulting "encoded data" at the bottom. It should look like this
 
 `000000000000000000000000000000000000000000000022ee66da08cf2d48ef`
+
+
 ![4.png](images/4.png)
 
 Now we put these two parts together with a 0x at the beginning so
