@@ -7,7 +7,7 @@ This guide should serve to allow users to create their own exit pool transaction
 Lets first familiarize ourself with what an exit pool looks like.  
 https://etherscan.io/tx/0xec1e3fdc774542cd93a8f8bc8a0d2216b52d0ece1097faa952d58ce0bb7d9698
 
-1. Go to the Balancer vault address on etherscan and scroll down until you see "contract abi".  Copy this and go to https://abi.hashex.org/ select autoparse, and paste the abi into the text box and click parse.  Then under "function" select "exitPool"
+Go to the Balancer vault address on etherscan and scroll down until you see "contract abi".  Copy this and go to https://abi.hashex.org/ select autoparse, and paste the abi into the text box and click parse.  Then under "function" select "exitPool"
 https://etherscan.io/address/0xba12222222228d8ba445958a75a0704d566bf2c8#code
 
 It should look like this 
@@ -26,12 +26,16 @@ The exitpool transaction is made up of four parts
 *And finally, the most complex one,*  
 
 ## **Request** 
-**Request** is a struct made up of address[],uint256[],bytes,bool it is fine if you don't know what this means, I will show you how to encode it
+**Request** is a struct made up of `address[],uint256[],bytes,bool` corresponding with:
+
+`[contract addresses, amounts, userData, toInternalBalance]`
+
+it is fine if you don't know what this means, I will show you how to encode it. 
 
 Let's break down each part of the request.  Get a text file and fill out these parameters as we go and we will put it together at the end.  
 
-### **address[]** 
-this is an array of contract addresses for the assets in the pool. 
+### **address[]** Contract addresses
+this is an array of **contract addresses for the assets** in the pool. 
 
 *If you already know the asset contract addresses, you can skip this part.*
 Go to the balancer vault on etherscan, and go to contract>read contract then find 10. getPoolTokens.  Input the poolid and hit query and it should return the array of tokens like this 
@@ -42,17 +46,17 @@ It should look like this
 `["0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
 "0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF"]`
 
-**Important note** the addresss above must be sorted lowest to highest, it terms of leading hexidecimal digits.  with 1 < 5< a < f.  In this case 0xC02 is less than 0xC0c.  If you get BAL#102 this is whats causing it.  
+**Important note** the addresss above must be sorted lowest to highest, it terms of leading hexadecimal digits.  with 1 < 5< a < f.  In this case 0xC02 is less than 0xC0c.  If you get BAL#102 this is whats causing it.  
 
-### **uint256[]** 
-is where we will be encoding our amounts out.  You must be aware of the decimals on the token (can be found on the token page on etherscan) and adjust accordingly per asset.  You can find out how much underlying assets your pool tokens are worth on the balancer ui, and wallet viewers like debank, zapper, etc.  Note that you have have to apply slippage at this stage so if you have a slippage of 1% (remember if it goes outside this range before being executed the transaction will fail, wasting precious gas), subtract 1% from both assets.
+### **uint256[]** Amounts
+is where we will be encoding our **amounts out**.  You must be aware of the decimals on the token (can be found on the token page on etherscan) and adjust accordingly per asset.  You can find out how much underlying assets your pool tokens are worth on the balancer ui, and wallet viewers like debank, zapper, etc.  Note that you have have to apply slippage at this stage so if you have a slippage of 1% (remember if it goes outside this range before being executed the transaction will fail, wasting precious gas), subtract 1% from both assets.
 
 I'll work off the same example from above, which used the amounts 
 `["11769299331677283777","10012399421913945132007"]`
 
 Which normalized from 18 decimals is 11.7692993317 and 10012.3994219.  Note that the order of this array corresponds with the order of assets in the above address[] array.  
 
-### **userData** bytes
+### **bytes** **userData**
 This data basically describes 
 1. what exit type it is (proportional in this case) and 
 2. how much BPT to burn
@@ -85,9 +89,9 @@ Now we put these two parts together with a 0x at the beginning so
 
 Which is our **userData**
 
-### **bool**
+### **bool** toInternalBalance
 
-The final parameter relates to whether the resulting output is to internal balances.  You can just set it to `false`
+The final parameter relates to whether the resulting output is to internal balances.  You can just set it to `false` if you don't intend to use internal balances (which you probably don't).
 
 So now we put these four pieces together in an array like this 
 
