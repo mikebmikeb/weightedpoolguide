@@ -24,7 +24,7 @@ The exitpool transaction is made up of four parts, `poolId, sender, recipient, r
 
 **Recipient**: this is also your address
 
-*And finally, the most complex one,*  
+*And finally, the most complex one, *  
 
 ## **Request** 
 **Request** is a struct made up of `address[],uint256[],bytes,bool` corresponding with:
