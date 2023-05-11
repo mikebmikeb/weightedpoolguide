@@ -11,6 +11,7 @@ Go to the Balancer vault address on etherscan and scroll down until you see "con
 https://etherscan.io/address/0xba12222222228d8ba445958a75a0704d566bf2c8#code
 
 It should look like this 
+
 ![1.png](images/1.png)
 
 The exitpool transaction is made up of four parts, `poolId, sender, recipient, request`
