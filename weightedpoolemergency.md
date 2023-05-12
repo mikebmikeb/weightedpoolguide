@@ -48,7 +48,7 @@ It should look like this
 "0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF"]`
 
 ## **Important note** 
-the addresss above must be sorted lowest to highest, it terms of leading hexadecimal digits.  with 1 < 5< a < f.  In this case 0xC02 is less than 0xC0c.  If you get BAL#102 this is whats causing it.  
+the addresss above must be sorted lowest to highest, in terms of leading hexadecimal digits.  with 1 < 5< a < f.  In this case 0xC02 is less than 0xC0c.  If you get BAL#102 this is whats causing it.  
 
 ### **uint256[]** Amounts
 is where we will be encoding our **amounts out**.  You must be aware of the decimals on the token (can be found on the token page on etherscan) and adjust accordingly per asset.  You can find out how much underlying assets your pool tokens are worth on the balancer ui, and wallet viewers like debank, zapper, etc.  Note that you have have to apply slippage at this stage so if you have a slippage of 1% (remember if it goes outside this range before being executed the transaction will fail, wasting precious gas), subtract 1% from both assets.
