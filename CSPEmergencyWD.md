@@ -53,12 +53,14 @@ It should look like this
 the addresss above must be sorted lowest to highest, it terms of leading hexadecimal digits.  with 1 < 5< a < f.  In this case 0xC02 is less than 0xC0c.  If you get BAL#102 this is whats causing it.  
 
 ### **uint256[]** Amounts
-is where we will be encoding our **amounts out**.  You must be aware of the decimals on the token (can be found on the token page on etherscan) and adjust accordingly per asset.  You can find out how much underlying assets your pool tokens are worth on the balancer ui, and wallet viewers like debank, zapper, etc.  Note that you have have to apply slippage at this stage so if you have a slippage of 1% (remember if it goes outside this range before being executed the transaction will fail, wasting precious gas), subtract 1% from both assets.
+is where we will be encoding our **amounts out**.  You must be aware of the decimals on the token (can be found on the token page on etherscan) and adjust accordingly per asset.  You can find out how much underlying assets your pool tokens are worth on the balancer ui, and wallet viewers like debank, zapper, etc.  Note that you have have to apply slippage at this stage so if you have a slippage of 1% (remember if it goes outside this range before being executed the transaction will fail, wasting precious gas), subtract 1% from both assets. This can be done bu multiplying both assets buy 0.99 to represent 99%. 
 
 I'll work off the same example from above, which used the amounts 
 `["76448168416669475246758","0","75666715188","40078891701"]`
 
-Which normalized from 18 decimals for DAI and the BPT is 76,448.168416669475246758 and 0 respectively. For USDC and USDT the assets are normalized by 6 decimals, in this case 40,078.891701 USDT and 75,666.715188 USDC are requested.  Note that the order of this array corresponds with the order of assets in the above address[] array.
+Which normalized from 18 decimals for DAI and the BPT is 76,448.168416669475246758 and 0 respectively. The BPT value will always be zero in composable stable pool exits, because the user is only withdrawing the underlying assets. 
+
+For USDC and USDT the assets are normalized by 6 decimals, in this case 40,078.891701 USDT and 75,666.715188 USDC are requested.  Note that the order of this array corresponds with the order of assets in the above address[] array.
 
 ### **bytes** **userData**
 This data basically describes 
